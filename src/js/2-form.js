@@ -43,7 +43,7 @@ const onFeedbackFormSubmit = event => {
     alert('Fill please all fields');
     return;
   }
-  localStorage.removeItem('feedback-on-state');
+  localStorage.removeItem('feedback-form-state');
   event.currentTarget.reset();
 };
 refs.formFeedback.addEventListener('input', onFormFieldChange);
