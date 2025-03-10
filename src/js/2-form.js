@@ -1,22 +1,50 @@
 const refs = {
-  form: document.querySelector('.feedback-form'),
-  label: document.querySelectorAll('label'),
-  input: document.querySelectorAll('input'),
-  btn: document.querySelector('button'),
+  formFeedback: document.querySelector('.feedback-form'),
+  input: document.querySelector("input[name='email']"),
+  textarea: document.querySelector("textarea[name='message']"),
 };
-refs.form.addEventListener('submit', event => {
-  event.preventDefault();
 
-  const email = refs.form.querySelector("input[name='email']").value.trim();
-  const message = refs.form.querySelector("input[name='message']").value.trim();
+const newDiv = document.createElement('div');
+newDiv.classList.add('form-container');
 
-  if (email === '' || message === '') {
-    alert('All form fields must be filled in');
+refs.formFeedback.parentNode.insertBefore(newDiv, refs.formFeedback);
+newDiv.appendChild(refs.formFeedback);
+
+let formData = {
+  email: '',
+  message: '',
+};
+
+const fillFormFields = formFeedback => {
+  const formLsData = JSON.parse(localStorage.getItem('feedback-form-state'));
+  if (formLsData === null) {
     return;
   }
+  formData = formLsData;
+  const formDataKeys = Object.keys(formLsData);
+  formDataKeys.forEach(key => {
+    refs.formFeedback.elements[key].value = formLsData[key];
+  });
+};
 
-  // console.log(`Email: ${email}, Password: ${password}`);
+fillFormFields(refs.formFeedback);
 
-  form.reset();
-});
-refs.btn.classList.add('task-4-btn');
+const onFormFieldChange = ({ target: formField }) => {
+  const fieldName = formField.name;
+  const fieldValue = formField.value;
+  formData[fieldName] = fieldValue;
+
+  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
+};
+
+const onFeedbackFormSubmit = event => {
+  event.preventDefault();
+  if (refs.input.value === '' || refs.textarea.value === '') {
+    alert('Fill please all fields');
+    return;
+  }
+  localStorage.removeItem('feedback-on-state');
+  event.currentTarget.reset();
+};
+refs.formFeedback.addEventListener('input', onFormFieldChange);
+refs.formFeedback.addEventListener('submit', onFeedbackFormSubmit);
