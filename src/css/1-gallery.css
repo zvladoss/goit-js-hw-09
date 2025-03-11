@@ -11,12 +11,10 @@ ul {
   margin: 0;
   padding: 0;
 }
-.gallery-container {
+.gallery {
   max-width: 1128px;
   margin-left: auto;
   margin-right: auto;
-}
-.gallery {
   font-family: inherit;
   display: flex;
   flex-wrap: wrap;

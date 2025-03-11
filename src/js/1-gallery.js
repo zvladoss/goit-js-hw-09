@@ -86,22 +86,6 @@ const createGallery = ({ preview, original, description }) => {
 `;
 };
 
-// CREATE-NEW-CONTAINER
-//
-//
-const galleryBox = document.createElement('div');
-
-galleryBox.classList.add('gallery-container');
-//----
-
-//ADD-LIST-TO-CONTAINER
-//
-//
-document.body.insertBefore(galleryBox, refs.galleryList);
-
-galleryBox.appendChild(refs.galleryList);
-//----
-
 const addGalleryItem = images.map(image => createGallery(image)).join('');
 
 refs.galleryList.insertAdjacentHTML('beforeend', addGalleryItem);
